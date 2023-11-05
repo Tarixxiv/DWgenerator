@@ -1,0 +1,42 @@
+CREATE TABLE Negocjator (
+    Id INT PRIMARY KEY IDENTITY,
+    Imię NVARCHAR(16),
+    Nazwisko NVARCHAR(16)
+);
+
+CREATE TABLE Strajk (
+    Id INT PRIMARY KEY IDENTITY,
+    LiczbaStrajkujących INT,
+    Początek DATE,
+    Koniec DATE,
+    FK_Negocjator INT,
+    FOREIGN KEY (FK_Negocjator) REFERENCES Negocjator(Id)
+);
+
+CREATE TABLE Żądanie (
+    Nazwa NVARCHAR(500) PRIMARY KEY,
+    Kategoria NVARCHAR(60)
+);
+
+CREATE TABLE ŻądanieStrajku (
+    Id INT PRIMARY KEY IDENTITY,
+    FK_Żądanie NVARCHAR(500),
+    FK_Strajk INT,
+    FOREIGN KEY (FK_Żądanie) REFERENCES Żądanie(Nazwa),
+    FOREIGN KEY (FK_Strajk) REFERENCES Strajk(Id)
+);
+
+CREATE TABLE OkupacjaDoku (
+    Id INT PRIMARY KEY IDENTITY,
+    Numer_doku INT,
+    FK_Strajk INT,
+    FOREIGN KEY (FK_Strajk) REFERENCES Strajk(Id)
+);
+
+CREATE TABLE OkupacjaStatku (
+    Id INT PRIMARY KEY IDENTITY,
+    Nazwa NVARCHAR(100),
+    Model NVARCHAR(20),
+    FK_OkupacjaDoku INT,
+    FOREIGN KEY (FK_OkupacjaDoku) REFERENCES OkupacjaDoku(Id)
+);

@@ -10,7 +10,8 @@ CREATE TABLE Strajk (
     Początek DATE,
     Koniec DATE,
     FK_Negocjator INT,
-    FOREIGN KEY (FK_Negocjator) REFERENCES Negocjator(Id)
+    FOREIGN KEY (FK_Negocjator) REFERENCES Negocjator(Id),
+    NumerZleceniaNegocjatorskiego INT
 );
 
 CREATE TABLE Żądanie (

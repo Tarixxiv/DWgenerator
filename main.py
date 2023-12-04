@@ -98,15 +98,16 @@ if __name__ == '__main__':
             strike_duration = random.randint(1, 400)
             is_peaceful = random.randint(0, 1)
             time_lost_on_force = 0
+            ticketNumber = currentCount["strikes"] + 1000001
             if not is_peaceful:
                 time_lost_on_force = random.randint(1, 400)
             strikes.append(
                 " ".join([str(random.randint(1, 10000)), str(date),
-                          str(date + datetime.timedelta(days=strike_duration)), str(negotiator_id)]))
+                          str(date + datetime.timedelta(days=strike_duration)), str(negotiator_id), str(ticketNumber)]))
             # csv
             strikes_csv.append(
                 ",".join(["strajk" + str(currentCount["strikes"] + strike_id), str(strike_duration),
-                          str(is_peaceful), str(time_lost_on_force), get_pesel()]))
+                          str(is_peaceful), str(time_lost_on_force), get_pesel(), str(ticketNumber)]))
             currentCount["strikes"] += 1
 
             # demands

@@ -27,7 +27,7 @@ def get_pesel():
 
 
 if __name__ == '__main__':
-    fk = Faker(["de_DE"])
+    fk = Faker()
     generateCount = {
         "negotiators": 50,
         "strikes_per_negotiator": 10,
@@ -78,22 +78,22 @@ if __name__ == '__main__':
     dock_occupations = []
 
     # negotiator
-    for negotiator_id in range(currentCount["negotiators"], currentCount["negotiators"] + generateCount["negotiators"]):
+    for negotiator_id in range(currentCount["negotiators"] + 1, currentCount["negotiators"] + generateCount["negotiators"] + 1):
         negotiator_name = fk.first_name()
         negotiator_surname = fk.last_name()
-        negotiators.append(" ".join([negotiator_name, negotiator_surname]))
+        negotiators.append(" ".join(["",negotiator_name, negotiator_surname]))
         # csv
         born_date = fk.date_between(start_date=start_date, end_date=end_date)
         employment_age = random.randint(16, 200)
         employment_date = fk.date_between(start_date=add_years(start_date, 16), end_date=add_years(end_date, 16))
 
         negotiators_csv.append(",".join(
-            [negotiator_name, negotiator_surname, str(born_date), str(employment_date), random.choice(planets),
+            [str(negotiator_id),negotiator_name, negotiator_surname, str(born_date), str(employment_date), random.choice(planets),
              get_pesel()]))
 
         currentCount["negotiators"] += 1
         # strike
-        for strike_id in range(currentCount["strikes"], currentCount["strikes"] + generateCount["strikes_per_negotiator"]):
+        for strike_id in range(currentCount["strikes"]+ 1, currentCount["strikes"] + generateCount["strikes_per_negotiator"]+ 1):
             date = fk.date_between(start_date=employment_date, end_date=add_years(end_date, 16))
             strike_duration = random.randint(1, 400)
             is_peaceful = random.randint(0, 1)
@@ -102,30 +102,36 @@ if __name__ == '__main__':
             if not is_peaceful:
                 time_lost_on_force = random.randint(1, 400)
             strikes.append(
-                " ".join([str(random.randint(1, 10000)), str(date),
+                " ".join(["",str(random.randint(1, 10000)), str(date),
                           str(date + datetime.timedelta(days=strike_duration)), str(negotiator_id), str(ticketNumber)]))
             # csv
             strikes_csv.append(
-                ",".join(["strajk" + str(currentCount["strikes"] + strike_id), str(strike_duration),
-                          str(is_peaceful), str(time_lost_on_force), get_pesel(), str(ticketNumber)]))
+                ",".join([str(strike_id),
+                          "strajk" + str(currentCount["strikes"] + strike_id),
+                          str(negotiator_id),
+                          str(strike_duration),
+                          str(is_peaceful),
+                          str(time_lost_on_force),
+                          get_pesel(),
+                          str(ticketNumber)]))
             currentCount["strikes"] += 1
 
             # demands
-            for demand_id in range(currentCount["demands"], currentCount["demands"] + generateCount["demands_per_strike"]):
+            for demand_id in range(currentCount["demands"]+ 1, currentCount["demands"] + generateCount["demands_per_strike"]+ 1):
                 demands.append(" ".join(["demand" + str(demand_id), random.choice(demand_types)]))
-                demand_strike.append(" ".join(["strajk" + str(demand_id), str(strike_id)]))
+                demand_strike.append(" ".join(["","strajk" + str(demand_id), str(strike_id)]))
                 currentCount["demands"] += 1
 
             # dock occupation
-            for _ in range(currentCount["dock_occupations"],
-                           currentCount["dock_occupations"] + generateCount["dock_ocupations_per_strike"]):
-                dock_occupations.append(" ".join([str(random.randint(1, dock_count)), str(strike_id)]))
+            for _ in range(currentCount["dock_occupations"]+ 1,
+                           currentCount["dock_occupations"] + generateCount["dock_ocupations_per_strike"]+ 1):
+                dock_occupations.append(" ".join(["",str(random.randint(1, dock_count)), str(strike_id)]))
                 currentCount["dock_occupations"] += 1
 
     ship_occupations = []
     # ship occupation
-    for _ in range(generateCount["ship_occupations"]):
-        ship_occupations.append(" ".join([random.choice(ship_names),
+    for _ in range(generateCount["ship_occupations"]+ 1):
+        ship_occupations.append(" ".join(["",random.choice(ship_names),
                                           random.choice(ship_models),
                                           str(random.randint(1, currentCount["dock_occupations"]))]))
 

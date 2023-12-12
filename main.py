@@ -66,8 +66,8 @@ if __name__ == '__main__':
     with open("planets") as file:
         planets = [line.rstrip() for line in file]
 
-    start_date = datetime.date.fromisoformat("2000-01-01")
-    end_date = datetime.date.fromisoformat("2023-01-01")
+    start_date = datetime.date.fromisoformat("1025-01-01")
+    end_date = datetime.date.fromisoformat("1527-01-01")
 
     negotiators = []
     negotiators_csv = []
@@ -84,9 +84,9 @@ if __name__ == '__main__':
         negotiators.append(" ".join(["",negotiator_name, negotiator_surname]))
         # csv
         born_date = fk.date_between(start_date=start_date, end_date=end_date)
-        employment_age = random.randint(16, 200)
-        employment_date = fk.date_between(start_date=add_years(start_date, 16), end_date=add_years(end_date, 16))
-
+        employment_age = random.randint(16, 20)
+#        employment_date = fk.date_between(start_date=add_years(start_date, 16), end_date=add_years(end_date, 16))
+        employment_date = add_years(born_date, employment_age)
         negotiators_csv.append(",".join(
             [str(negotiator_id),negotiator_name, negotiator_surname, str(born_date), str(employment_date), random.choice(planets),
              get_pesel()]))

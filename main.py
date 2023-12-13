@@ -94,7 +94,7 @@ if __name__ == '__main__':
         currentCount["negotiators"] += 1
         # strike
         for strike_id in range(currentCount["strikes"]+ 1, currentCount["strikes"] + generateCount["strikes_per_negotiator"]+ 1):
-            date = fk.date_between(start_date=employment_date, end_date=add_years(end_date, 16))
+            date = fk.date_between(start_date=employment_date, end_date=add_years(end_date, employment_age))
             strike_duration = random.randint(1, 400)
             is_peaceful = random.randint(0, 1)
             time_lost_on_force = 0
@@ -108,7 +108,7 @@ if __name__ == '__main__':
             # csv
             strikes_csv.append(
                 ",".join([str(strike_id),
-                          "strajk" + str(currentCount["strikes"] + strike_id),
+                          "strajk" + str(currentCount["strikes"] + 1 + strike_id),
                           str(negotiator_id),
                           str(strike_duration),
                           str(is_peaceful),
@@ -131,7 +131,7 @@ if __name__ == '__main__':
 
     ship_occupations = []
     # ship occupation
-    for _ in range(generateCount["ship_occupations"]+ 1):
+    for _ in range(generateCount["ship_occupations"] + 1):
         ship_occupations.append(" ".join(["",random.choice(ship_names),
                                           random.choice(ship_models),
                                           str(random.randint(1, currentCount["dock_occupations"]))]))

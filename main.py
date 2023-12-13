@@ -66,8 +66,8 @@ if __name__ == '__main__':
     with open("planets") as file:
         planets = [line.rstrip() for line in file]
 
-    start_date = datetime.date.fromisoformat("1025-01-01")
-    end_date = datetime.date.fromisoformat("1527-01-01")
+    start_date = datetime.date.fromisoformat("1900-01-01")
+    end_date = datetime.date.fromisoformat("2005-01-01")
 
     negotiators = []
     negotiators_csv = []
@@ -103,7 +103,8 @@ if __name__ == '__main__':
                 time_lost_on_force = random.randint(1, 400)
             strikes.append(
                 " ".join(["",str(random.randint(1, 10000)), str(date),
-                          str(date + datetime.timedelta(days=strike_duration)), str(negotiator_id), str(ticketNumber)]))
+                          str(date + datetime.timedelta(days=strike_duration)), str(negotiator_id), str(ticketNumber),
+                          str(random.randint(0,23))]))
             # csv
             strikes_csv.append(
                 ",".join([str(strike_id),

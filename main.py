@@ -110,6 +110,7 @@ if __name__ == '__main__':
             strikes_negotiator_id = 0
             if not isNegotiatorHasStrike:
                 strikes_negotiator_id = negotiator_id
+                isNegotiatorHasStrike = True
             else:
                 strikes_negotiator_id = random.randint(1, negotiator_id)
 
@@ -136,12 +137,22 @@ if __name__ == '__main__':
                 demands.append(" ".join(["demand" + str(demand_id), random.choice(demand_types)]))
                 demand_strike.append(" ".join(["", "strajk" + str(demand_id), str(strike_id)]))
                 currentCount["demands"] += 1
-
+            isStrikeHasDock = False
             # dock occupation
             for _ in range(currentCount["dock_occupations"] + 1,
                            currentCount["dock_occupations"] + generateCount["dock_ocupations_per_strike"] + 1):
-                dock_occupations.append(" ".join(["", str(random.randint(1, dock_count)), str(strike_id)]))
-                currentCount["dock_occupations"] += 1
+                if not isStrikeHasDock:
+                    occupation_strike_id = strike_id
+                    isStrikeHasDock = True
+                else:
+                    occupation_strike_id = random.randint(1, strike_id)
+
+                dock_occupations.append(" ".join(["", str(random.randint(1, dock_count)), str(occupation_strike_id)]))
+
+
+    # remove duplicates
+    dock_occupations = list(set(dock_occupations))
+    currentCount["dock_occupations"] = currentCount["dock_occupations"] + len(dock_occupations)
 
     ship_occupations = []
     # ship occupation
